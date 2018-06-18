@@ -6,7 +6,7 @@ $menu = array(
         "Voir" => "voir-utilisateur",
     ),
     "Newsletter" => array(
-        "Creer" => "creer-newsletter",
+        "Creer" => '',
         "Voir" => "voir-newsletter",
     ),
     "Voir Site Web" => '',
@@ -28,6 +28,8 @@ include $ind . 'php/includes/func.php';
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8" />
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700" rel="stylesheet">
   <link rel="stylesheet" href="<?php echo $ind ?>css/style.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <?php include $ind . 'php/includes/nav.php';
