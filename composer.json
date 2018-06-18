@@ -1,0 +1,12 @@
+{
+    "name": "fred/newsletter",
+    "authors": [
+        {
+            "name": "Fredius Tout Court",
+            "email": "frediustcDev@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.0"
+    }
+}
