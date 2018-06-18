@@ -4,22 +4,45 @@ $page = 'Creer Newsletter';
 $bread = ['Newsletter', 'Creer'];
 include './php/includes/head.php';
 ?>
-    <form action="#" method="post">
+    <?php include $ind . 'php/scripts/createNews.php';?>
+
+    <form action="./" method="post" enctype="multipart/form-data">
       <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="fullname">Nom Complet</label>
-          <input type="text" class="form-control" name="fullname" id="fullname" required>
+        <div class="form-group col-md-4 col-xl-3 col-xs-12">
+          <label for="img">Image</label>
+          <input type="file" class="form-control" name="img" id="img" required accept="image/*">
         </div>
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="email">Email Addresse</label>
-          <input type="email" class="form-control" name="email" id="email" required>
+        <div class="form-group col-md-4 col-xl-3 col-xs-12">
+          <label for="sujet">Sujet</label>
+          <input type="text" class="form-control" name="sujet" id="sujet" required>
+        </div>
+        <div class="form-group col-md-4 col-xl-6 col-xs-12">
+          <label for="desc">Description</label>
+          <input type="text" class="form-control" name="desc" id="desc" required>
+        </div>
+        <div class="form-group col-12">
+          <label for="email">Clients</label>
+          <select multiple required class="form-control" name="clients[]" id="exampleFormControlSelect2">
+              <?php
+$clients = $db->query('SELECT * FROM clients ORDER BY createdAt');
+
+while ($client = $clients->fetch()) {?>
+            <option value="<?php echo $client['client_email'] ?>">
+            <?php echo $client['client_fullname'] ?> - <?php echo $client['client_email'] ?>
+            </option>
+<?php }?>
+          </select>
+          <small class="form-text"><code>(Maintenir <kbd>Ctrl</kbd> pour selectionner plusieurs ulilisateurs et <kbd>Shift</kbd> pour un interval.)</code></small>
+        </div>
+        <div class="form-group col-12">
+          <label for="corps">Corps</label>
+          <textarea class="form-control textarea" name="corps" id="corps" required></textarea>
         </div>
       </div>
       <div class="form-group">
-      <button type="submit" name="addUser" class="btn btn-primary btn-block">Ajouter</button>
+      <button type="submit" name="createNews" class="btn btn-primary btn-block">Ajouter</button>
       </div>
     </form>
-  </div>
 <?php
 include './php/includes/foot.php';
 ?>

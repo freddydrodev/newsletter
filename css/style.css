@@ -4,3 +4,8 @@ body {
 #main-container {
   padding-top: 58px;
 }
+.textarea {
+  min-height: 150px;
+  max-height: 350px;
+  resize: vertical;
+}

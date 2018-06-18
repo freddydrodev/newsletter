@@ -85,7 +85,7 @@ function menu($menu = [], $active = '', $ind)
 function alert($msg = 'Erreur Inconnue', $type = 'danger')
 {
 
-    return '<div class="alert alert-' . $type . ' alert-dismissible fade show" role="alert">
+    echo '<div class="alert alert-' . $type . ' alert-dismissible fade show" role="alert">
   ' . $msg . '
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>

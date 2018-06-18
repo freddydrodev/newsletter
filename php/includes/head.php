@@ -5,12 +5,12 @@ $menu = array(
         "Ajouter" => "ajouter-utilisateur",
         "Voir" => "voir-utilisateur",
     ),
-    "Newsletter" => array(
-        "Creer" => '',
-        "Voir" => "voir-newsletter",
-    ),
+    // "Newsletter" => array(
+    //     "Creer" => '',
+    //     "Voir" => "voir-newsletter",
+    // ),
+    "Newsletter" => '',
     "Voir Site Web" => '',
-    "Link" => 'bjr',
 );
 
 include $ind . 'php/includes/db.php';
