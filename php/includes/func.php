@@ -69,9 +69,9 @@ function menu($menu = [], $active = '', $ind)
 
     $out .= '</ul>
       <div class="right-block navbar-nav">
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link" href="#">Diomande Dro Freddy Junior</a>
-        </li>
+        </li>-->
         <li class="nav-item border-left">
           <a class="nav-link" href="#">Deconnection</a>
         </li>
