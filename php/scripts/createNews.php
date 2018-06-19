@@ -14,38 +14,43 @@ if (isset($_POST['createNews'])) {
     $corps = clear($_POST['corps']);
     $img = $_FILES["img"];
     $ok = true;
+    $imgNbr = 0;
 
     if (isset($_FILES) && !empty($_FILES)) {
+        $imgNbr = count($img['name']);
 
         // file check
         $target_dir = $ind . "assets/images/";
-        $target_file = $target_dir . basename($img["name"]);
-        $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
-        // Check if image file is a actual image or fake image
-        $check = getimagesize($img["tmp_name"]);
-        if ($check == false) {
-            $ok = false;
-            alert('Fichier n\'est pas une image - ' . $check["mime"] . '.');
+        for ($i = 0; $i < $imgNbr; $i++) {
+
+            $target_file = $target_dir . basename($img["name"][$i]);
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            // Check if image file is a actual image or fake image
+            $check = getimagesize($img["tmp_name"][$i]);
+            if ($check == false) {
+                $ok = false;
+                alert('Fichier n\'est pas une image - ' . $check["mime"][$i] . '.');
+            }
+            // Check if file already exists
+            // if (file_exists($target_file)) {
+            //     // $ok = false;
+            //     echo "Sorry, file already exists.";
+            // }
+            // Check file size
+            if ($img["size"][$i] > 4194304) {
+                $ok = false;
+                alert('Desole l\'image est trop lourde elle doit etre moins de 4Mo');
+            }
+            // Allow certain file formats
+            if (strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg") {
+                $ok = false;
+                alert('Desole le fichier n\'est pas une image (JPG, JPEG, PNG)');
+            }
         }
-        // Check if file already exists
-        // if (file_exists($target_file)) {
-        //     // $ok = false;
-        //     echo "Sorry, file already exists.";
-        // }
-        // Check file size
-        if ($img["size"] > 4194304) {
-            $ok = false;
-            alert('Desole l\'image est trop lourde elle doit etre moins de 4Mo');
-        }
-        // Allow certain file formats
-        if (strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg") {
-            $ok = false;
-            alert('Desole le fichier n\'est pas une image (JPG, JPEG, PNG)');
-        }
+
     } else {
         alert('Image: Aucune Image Ajoutee');
     }
-
     //check data
     if (strlen($sujet) <= 0) {
         $ok = false;
@@ -65,11 +70,15 @@ if (isset($_POST['createNews'])) {
     }
 
     if ($ok) {
-        $date = new DateTime();
+        $imgs = [];
+        for ($i = 0; $i < $imgNbr; $i++) {
+            $date = new DateTime();
 
-        $n = 'Article_' . $date->getTimestamp() . '.jpg';
-        $dest = $target_dir . $n;
-        // if (move_uploaded_file($img["tmp_name"], $dest)) {
+            $n = 'Article_' . $date->getTimestamp() . '_' . $i . '.jpg';
+            $dest = $target_dir . $n;
+            array_push($imgs, $dest);
+            move_uploaded_file($img["tmp_name"][$i], $dest);
+        }
 
         //send the email
         $mail = new PHPMailer(true); // Passing `true` enables exceptions
@@ -90,21 +99,19 @@ if (isset($_POST['createNews'])) {
             foreach ($clients as $client) {
                 $mail->addAddress($client);
             }
-            // $mail->addAddress('joe@example.net', 'Joe User'); // Add a recipient
-            // $mail->addAddress('ellen@example.com'); // Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
 
             //Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz'); // Add attachments
-            $mail->addAttachment($img['tmp_name']); // Optional name
+            foreach ($imgs as $att) {
+                $mail->addAttachment($att); // attachement
+            }
 
             //Content
             $mail->isHTML(true); // Set email format to HTML
             $mail->Subject = $sujet;
-            $mail->Body = '<img src="' . $dest . '"alt="preview"/>This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = $corps;
+
+            include $ind . 'php/scripts/generate.php';
+            $mail->Body = generate($sujet, $desc, $corps);
+            $mail->AltBody = strip_tags(generate($sujet, $desc, $corps));
 
             $mail->send();
             alert('success: Newsletter envoyee!', 'success');
@@ -112,11 +119,5 @@ if (isset($_POST['createNews'])) {
         } catch (Exception $e) {
             alert('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo);
         }
-
-        // } else {
-        //     alert('erreur: Image ajoute!');
-        // }
-
     }
-
 }

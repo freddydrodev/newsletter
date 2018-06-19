@@ -1,5 +1,5 @@
 <?php
-function generate($img, $ubject, $title, $body)
+function generate($subject, $desc, $body)
 {
 
     return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -1394,8 +1394,7 @@ body.outlook p {
                             <table>
                               <tr>
                                 <th>
-                                  <h1 class="text-center">The Insider</h1>
-                                  <center data-parsed=""> <img src="http://placehold.it/500x200" align="center" class="float-center"> </center>
+                                  <h1 class="text-center">' . $subject . '</h1>
                                   <table class="spacer">
                                     <tbody>
                                       <tr>
@@ -1403,8 +1402,8 @@ body.outlook p {
                                       </tr>
                                     </tbody>
                                   </table>
-                                  <p class="lead">Title of the email</p>
-                                  <p>Body of the email</p>
+                                  <p class="lead">' . $desc . '</p>
+                                  <p style="font-weight:300">' . $body . '</p>
                                   <p><small>Pour visiter notre site web <a href="#">cliquer ici</a></small></p>
                                 </th>
                               </tr>

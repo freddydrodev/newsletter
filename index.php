@@ -9,8 +9,8 @@ include './php/includes/head.php';
     <form action="./" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="form-group col-md-4 col-xl-3 col-xs-12">
-          <label for="img">Image</label>
-          <input type="file" class="form-control" name="img" id="img" required accept="image/*">
+          <label for="img">Attachements</label>
+          <input type="file" class="form-control" name="img[]" id="img" multiple required accept="image/*">
         </div>
         <div class="form-group col-md-4 col-xl-3 col-xs-12">
           <label for="sujet">Sujet</label>
