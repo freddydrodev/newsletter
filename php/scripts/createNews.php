@@ -18,13 +18,13 @@ if (isset($_POST['createNews'])) {
 
     if (isset($_FILES) && !empty($_FILES)) {
         $imgNbr = count($img['name']);
-
+        $imageFileType = [];
         // file check
         $target_dir = $ind . "assets/images/";
         for ($i = 0; $i < $imgNbr; $i++) {
 
             $target_file = $target_dir . basename($img["name"][$i]);
-            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            array_push($imageFileType, pathinfo($target_file, PATHINFO_EXTENSION));
             // Check if image file is a actual image or fake image
             // $check = getimagesize($img["tmp_name"][$i]);
             // if ($check == false) {
@@ -74,7 +74,7 @@ if (isset($_POST['createNews'])) {
         for ($i = 0; $i < $imgNbr; $i++) {
             $date = new DateTime();
 
-            $n = 'Article_' . $date->getTimestamp() . '_' . $i . '.jpg';
+            $n = 'Fichier_' . $date->getTimestamp() . '_' . $i . '.' . strtolower($imageFileType[$i]);
             $dest = $target_dir . $n;
             array_push($imgs, $dest);
             move_uploaded_file($img["tmp_name"][$i], $dest);
