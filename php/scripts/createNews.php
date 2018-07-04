@@ -26,11 +26,11 @@ if (isset($_POST['createNews'])) {
             $target_file = $target_dir . basename($img["name"][$i]);
             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
             // Check if image file is a actual image or fake image
-            $check = getimagesize($img["tmp_name"][$i]);
-            if ($check == false) {
-                $ok = false;
-                alert('Fichier n\'est pas une image - ' . $check["mime"][$i] . '.');
-            }
+            // $check = getimagesize($img["tmp_name"][$i]);
+            // if ($check == false) {
+            //     $ok = false;
+            //     alert('Fichier n\'est pas une image - ' . $check["mime"][$i] . '.');
+            // }
             // Check if file already exists
             // if (file_exists($target_file)) {
             //     // $ok = false;
@@ -42,14 +42,14 @@ if (isset($_POST['createNews'])) {
                 alert('Desole l\'image est trop lourde elle doit etre moins de 4Mo');
             }
             // Allow certain file formats
-            if (strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg") {
-                $ok = false;
-                alert('Desole le fichier n\'est pas une image (JPG, JPEG, PNG)');
-            }
+            // if (strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg") {
+            //     $ok = false;
+            //     alert('Desole le fichier n\'est pas une image (JPG, JPEG, PNG)');
+            // }
         }
 
     } else {
-        alert('Image: Aucune Image Ajoutee');
+        alert('Fichier: Aucun Fichier Ajoutee');
     }
     //check data
     if (strlen($sujet) <= 0) {
@@ -87,11 +87,11 @@ if (isset($_POST['createNews'])) {
             // $mail->SMTPDebug = 1; // Enable verbose debug output
             $mail->isSMTP(); // Set mailer to use SMTP
             $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true; // Enable SMTP authentication
             $mail->Username = 'frediustc@gmail.com'; // SMTP username
             $mail->Password = 'resurection'; // SMTP password
-            $mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 465; // TCP port to connect to
+            $mail->SMTPAuth = true; // Enable SMTP authentication
+            $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587; // TCP port to connect to
 
             //Recipients
             $mail->setFrom('frediustc@gmail.com', 'Batir SA');
